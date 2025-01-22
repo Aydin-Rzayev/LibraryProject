@@ -1,5 +1,6 @@
-package com.OIBSIP.LibrarySystem.Models;
+package com.Library.LibraryProject.Models;
 
+import com.Library.LibraryProject.Enums.Statuses;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.Setter;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Integer id;
 
     @Column
     private String bookName;
@@ -30,5 +31,5 @@ public class Book {
 
     @Column
     private Statuses bookStatus;
-    private enum Statuses{NOT_AVAILABLE, AVAILABLE};
+   
 }

@@ -1,6 +1,6 @@
-package com.OIBSIP.LibrarySystem.DTOs;
+package com.Library.LibraryProject.DTOs;
 
-import com.OIBSIP.LibrarySystem.Roles;
+import com.Library.LibraryProject.Roles;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

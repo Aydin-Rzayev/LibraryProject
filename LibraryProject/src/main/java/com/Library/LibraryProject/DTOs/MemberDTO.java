@@ -1,4 +1,4 @@
-package com.OIBSIP.LibrarySystem.DTOs;
+package com.Library.LibraryProject.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

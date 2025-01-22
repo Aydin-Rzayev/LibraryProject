@@ -1,6 +1,6 @@
-package com.OIBSIP.LibrarySystem.Models;
+package com.Library.LibraryProject.Models;
 
-import com.OIBSIP.LibrarySystem.Roles;
+import com.Library.LibraryProject.Roles;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

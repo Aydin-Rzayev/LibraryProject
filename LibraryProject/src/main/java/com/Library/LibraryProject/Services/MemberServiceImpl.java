@@ -1,7 +1,7 @@
-package com.OIBSIP.LibrarySystem.Services;
+package com.Library.LibraryProject.Services;
 
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -10,20 +10,23 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.OIBSIP.LibrarySystem.Repositories.MemberRepository;
-import com.OIBSIP.LibrarySystem.DTOs.*;
-import com.OIBSIP.LibrarySystem.Models.Member;
-import com.OIBSIP.LibrarySystem.Roles;
+import com.Library.LibraryProject.Repositories.MemberRepository;
+
+import jakarta.transaction.Transactional;
+
+import com.Library.LibraryProject.DTOs.*;
+import com.Library.LibraryProject.Models.Member;
+import com.Library.LibraryProject.Roles;
 
 @Service
-public class MemberService {
+public class MemberServiceImpl implements IMemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public Optional<List<MemberDTO>> getAllMembers(){
+    @Override
+    public Optional<List<MemberDTO>> findAllMembers(){
         List<MemberDTO> members = new ArrayList<MemberDTO>();
         Iterator<Member> memberIterator = memberRepository.findAll().iterator();
         while(memberIterator.hasNext()){
@@ -35,14 +38,16 @@ public class MemberService {
         return Optional.of(members);
     }
 
-    public Optional<MemberDTO> getMemberById(Integer id){
+    @Override
+    public Optional<MemberDTO> findMemberById(Integer id){
         Optional<Member> member = memberRepository.findById(id);
         Optional<MemberDTO> memberDto = Optional.of(new MemberDTO());
         BeanUtils.copyProperties(member, memberDto);
         return memberDto;
     }
 
-    public Optional<List<MemberDTO>> getMembersByName(String name){
+    @Override
+    public Optional<List<MemberDTO>> findMembersByName(String name){
         Optional<List<Member>> members = memberRepository.findByName(name);
         List<MemberDTO> memberDTOs = members.get().stream()
                                                     .map(member -> {
@@ -54,7 +59,8 @@ public class MemberService {
         return Optional.of(memberDTOs);
     }
 
-    public Optional<List<MemberDTO>> getMembersByRole(Roles role){
+    @Override
+    public Optional<List<MemberDTO>> findMembersByRole(Roles role){
         Optional<List<Member>> members = memberRepository.findBYRole(role);
         List<MemberDTO> memberDTOs = members.get().stream()
                                                     .map(member -> {
@@ -66,6 +72,7 @@ public class MemberService {
         return Optional.of(memberDTOs); 
     }
 
+    @Override
     public boolean existsMember(MemberIU memberIU){
         Member member = new Member();
         BeanUtils.copyProperties(memberIU, member);
@@ -73,7 +80,44 @@ public class MemberService {
         return memberRepository.exists(memberExample);
     }
 
-    public Optional<MemberDTO> updateMember(){};
+    @Override
+    @Transactional
+    public Optional<MemberDTO> updateMember(MemberIU memberIU){
+        Optional<MemberDTO> optionalMemberDto = Optional.ofNullable(new MemberDTO());
+        if(existsMember(memberIU)){
+            Member member = new Member();
+            BeanUtils.copyProperties(memberIU, member);
+            BeanUtils.copyProperties(memberRepository.updateMember(member).get(), optionalMemberDto);
+        }
+        return optionalMemberDto;
+    }
+
+    @Override
+    @Transactional
+    public Optional<MemberDTO> saveMember(MemberIU memberIU){
+        Optional<MemberDTO> optionalMemberDto = Optional.ofNullable(new MemberDTO());
+        if(!existsMember(memberIU)){
+            Member member = new Member();
+            BeanUtils.copyProperties(memberIU, member);
+            memberRepository.save(member);
+            MemberDTO memberDTO = new MemberDTO();
+            BeanUtils.copyProperties(member, memberDTO);
+            optionalMemberDto = Optional.of(memberDTO); 
+        }
+        return optionalMemberDto;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteMember(MemberIU memberIU){
+        if(existsMember(memberIU)){
+            Member member = new Member();
+            BeanUtils.copyProperties(memberIU, member);
+            memberRepository.delete(member);
+            return true;
+        }
+        return false;
+    }
 
     
     
