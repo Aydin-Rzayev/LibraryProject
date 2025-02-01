@@ -17,8 +17,8 @@ import com.Library.LibraryProject.Repositories.MemberRepository;
 import jakarta.transaction.Transactional;
 
 import com.Library.LibraryProject.DTOs.*;
+import com.Library.LibraryProject.Enums.Roles;
 import com.Library.LibraryProject.Models.Member;
-import com.Library.LibraryProject.Roles;
 
 @Service
 public class MemberServiceImpl implements IMemberService {

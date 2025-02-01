@@ -1,6 +1,6 @@
 package com.Library.LibraryProject.Models;
 
-import com.Library.LibraryProject.Roles;
+import com.Library.LibraryProject.Enums.Roles;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column

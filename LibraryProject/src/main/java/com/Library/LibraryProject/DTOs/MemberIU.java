@@ -1,6 +1,6 @@
 package com.Library.LibraryProject.DTOs;
 
-import com.Library.LibraryProject.Roles;
+import com.Library.LibraryProject.Enums.Roles;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
