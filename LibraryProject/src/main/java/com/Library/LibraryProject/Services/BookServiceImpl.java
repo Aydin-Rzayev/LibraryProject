@@ -48,7 +48,7 @@ public class BookServiceImpl implements IBookService{
 
     @Override
     public Optional<List<BookDTO>> findBooksByName(String name){
-        Optional<List<Book>> books = bookRepository.findByName(name);
+        Optional<List<Book>> books = bookRepository.findByBookName(name);
         List<BookDTO> bookDTOs = books.get().stream()
                                                     .map(book -> {
                                                         BookDTO bookDto = new BookDTO();
@@ -60,8 +60,21 @@ public class BookServiceImpl implements IBookService{
     }
 
     @Override
+    public Optional<List<BookDTO>> findBooksByAuthor(String author){
+        Optional<List<Book>> books = bookRepository.findByBookAuthor(author);
+        List<BookDTO> bookDTOs = books.get().stream()
+                                                    .map(book -> {
+                                                        BookDTO bookDto = new BookDTO();
+                                                        BeanUtils.copyProperties(book, bookDto);
+                                                        return bookDto;
+                                                    })
+                                                    .collect(Collectors.toList());
+        return Optional.of(bookDTOs);                                            
+    }
+
+    @Override
     public Optional<List<BookDTO>> findBooksByStatuse(Statuses statuse){
-        Optional<List<Book>> books = bookRepository.findByStatuse(statuse);
+        Optional<List<Book>> books = bookRepository.findByBookStatuse(statuse);
         List<BookDTO> bookDTOs = books.get().stream()
                                                     .map(book -> {
                                                         BookDTO bookDto = new BookDTO();

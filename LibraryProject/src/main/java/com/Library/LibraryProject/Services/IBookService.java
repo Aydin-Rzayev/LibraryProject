@@ -19,6 +19,8 @@ public interface IBookService {
 
     Optional<List<BookDTO>> findBooksByStatuse(Statuses statuse);
 
+    Optional<List<BookDTO>> findBooksByAuthor(String author);
+
     boolean existsBook(BookIU bookIU);
 
     Optional<BookDTO> updateBook(BookIU bookIU);
