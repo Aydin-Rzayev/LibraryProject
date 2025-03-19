@@ -13,5 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     public Optional<List<Book>> findByBookName(String bookName);
     public Optional<List<Book>> findByBookStatuse(Statuses statuse);
     public Optional<List<Book>> findByBookAuthor(String author);
-    public Optional<Book> updateBook(Book book);
+    public Optional<Book> updateBook(Integer id, Book book);
 }

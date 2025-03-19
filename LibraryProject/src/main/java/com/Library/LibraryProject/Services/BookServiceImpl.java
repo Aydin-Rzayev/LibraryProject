@@ -95,12 +95,12 @@ public class BookServiceImpl implements IBookService{
 
     @Override
     @Transactional
-    public Optional<BookDTO> updateBook(BookIU bookIU){
+    public Optional<BookDTO> updateBook(Integer id, BookIU bookIU){
         Optional<BookDTO> optionalBookDto = Optional.ofNullable(new BookDTO());
-        if(existsBook(bookIU)){
+        if(id < bookRepository.count()){
             Book book = new Book();
             BeanUtils.copyProperties(bookIU, book);
-            BeanUtils.copyProperties(bookRepository.updateBook(book).get(), optionalBookDto);
+            BeanUtils.copyProperties(bookRepository.updateBook(id, book), optionalBookDto);
         }
         return optionalBookDto;
     }

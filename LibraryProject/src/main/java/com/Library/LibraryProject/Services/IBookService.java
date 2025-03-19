@@ -23,7 +23,7 @@ public interface IBookService {
 
     boolean existsBook(BookIU bookIU);
 
-    Optional<BookDTO> updateBook(BookIU bookIU);
+    Optional<BookDTO> updateBook(Integer id, BookIU bookIU);
 
     Optional<BookDTO> saveBook(BookIU bookIU);
 
