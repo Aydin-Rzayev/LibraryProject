@@ -1,5 +1,6 @@
 package com.Library.LibraryProject.Controllers;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Library.LibraryProject.DTOs.BookDTO;
 import com.Library.LibraryProject.DTOs.BookIU;
+import com.Library.LibraryProject.Enums.Statuses;
 import com.Library.LibraryProject.Services.IBookService;
 
 @RestController
@@ -51,8 +53,8 @@ public class BookController {
     }
 
     @GetMapping(path = "/{author}")
-    public ResponseEntity<List<BookDTO>> getBooksByStatuse(@PathVariable String author){
-        return bookService.findBooksByAuthor(author).map(ResponseEntity::ok)
+    public ResponseEntity<List<BookDTO>> getBooksByStatuse(@PathVariable Statuses status){
+        return bookService.findBooksByStatuse(status).map(ResponseEntity::ok)
                                                 .orElseGet(()->ResponseEntity.notFound().build());
     }
 

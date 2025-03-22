@@ -72,6 +72,13 @@ public class MemberServiceImpl implements IMemberService {
         return Optional.of(memberDTOs); 
     }
 
+    public Optional<MemberDTO> findMembersByEmail(String email){
+        Optional<Member> member = memberRepository.findByEmail(email);
+        Optional<MemberDTO> memberDto = Optional.of(new MemberDTO());
+        BeanUtils.copyProperties(member, memberDto);
+        return memberDto; 
+    }
+
     @Override
     public boolean existsMember(MemberIU memberIU){
         Member member = new Member();
@@ -82,12 +89,12 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     @Transactional
-    public Optional<MemberDTO> updateMember(MemberIU memberIU){
+    public Optional<MemberDTO> updateMember(Integer id, MemberIU memberIU){
         Optional<MemberDTO> optionalMemberDto = Optional.ofNullable(new MemberDTO());
-        if(existsMember(memberIU)){
+        if(id < memberRepository.count()){
             Member member = new Member();
             BeanUtils.copyProperties(memberIU, member);
-            BeanUtils.copyProperties(memberRepository.updateMember(member).get(), optionalMemberDto);
+            BeanUtils.copyProperties(memberRepository.updateMember(id, member), optionalMemberDto);
         }
         return optionalMemberDto;
     }

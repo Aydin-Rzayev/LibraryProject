@@ -32,6 +32,9 @@ public class Member {
     private Roles memberRole;
 
     @Column
+    private String email;
+
+    @Column
     private String password;
 
 }

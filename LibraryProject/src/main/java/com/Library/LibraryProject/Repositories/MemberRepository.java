@@ -11,5 +11,6 @@ import com.Library.LibraryProject.Models.Member;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     public Optional<List<Member>> findByName(String memberName);
     public Optional<List<Member>> findBYRole(Roles role);
-    public Optional<Member> updateMember(Member member);
+    public Optional<Member> findByEmail(String email);
+    public Optional<Member> updateMember(Integer id, Member member);
 }

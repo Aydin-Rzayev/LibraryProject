@@ -18,9 +18,11 @@ public interface IMemberService {
 
     Optional<List<MemberDTO>> findMembersByRole(Roles role);
 
+    Optional<MemberDTO> findMembersByEmail(String email);
+
     boolean existsMember(MemberIU memberIU);
 
-    Optional<MemberDTO> updateMember(MemberIU memberIU);
+    Optional<MemberDTO> updateMember(Integer id, MemberIU memberIU);
 
     Optional<MemberDTO> saveMember(MemberIU memberIU);
 
